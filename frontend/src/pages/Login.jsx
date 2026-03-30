@@ -23,6 +23,10 @@ function Login() {
 
       const payload = JSON.parse(atob(res.data.token.split(".")[1]));
       localStorage.setItem("role", payload.role);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", payload.role);
+      localStorage.setItem("first_name", payload.first_name);
+      localStorage.setItem("last_name", payload.last_name);
 
       if (payload.role === "admin") {
         navigate("/admin");
