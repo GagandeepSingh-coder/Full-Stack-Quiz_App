@@ -27,42 +27,22 @@ export default function StudentDashboard() {
         setQuizzes(res.data);
       })
       .catch((err) => {
-        console.error("❌ Dashboard error:", err);
         setError("Failed to load quizzes.");
       })
       .finally(() => setLoading(false));
   }, [token, userId, navigate]);
 
   const handleStartQuiz = (quizId) => navigate(`/attempt/${quizId}`);
-
   const handleResumeQuiz = (quizId, attemptId) =>
     navigate(`/attempt/${quizId}?attempt=${attemptId}`);
-
   const handleViewScore = (attemptId) => navigate(`/report/${attemptId}`);
-
-  const getStatusLabel = (status) => {
-    if (status === "completed") return "Completed";
-    if (status === "in_progress") return "In Progress";
-    return "Not Started";
-  };
-
-  const getStatusClass = (status) => {
-    if (status === "completed")
-      return "bg-green-100 text-green-800 border border-green-200";
-    if (status === "in_progress")
-      return "bg-yellow-100 text-yellow-800 border border-yellow-200";
-    return "bg-gray-100 text-gray-700 border border-gray-200";
-  };
 
   if (loading) {
     return (
       <>
         <Navbar />
-        <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
-          <div className="text-center text-gray-600">
-            <div className="text-2xl font-semibold">Loading quizzes...</div>
-            <div className="text-sm mt-1">Please wait</div>
-          </div>
+        <div className="min-h-screen bg-white p-8">
+          <div className="text-center">Loading...</div>
         </div>
       </>
     );
@@ -71,101 +51,109 @@ export default function StudentDashboard() {
   return (
     <>
       <Navbar />
-      <div className="bg-gray-50 min-h-screen py-6 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-white p-8">
         <div className="max-w-6xl mx-auto">
-          <header className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-1">
-              Welcome Back
-            </h1>
-            <p className="text-lg text-gray-600">
-              Continue your learning journey
-            </p>
-          </header>
+          <h1 className="text-2xl font-bold mb-8">Student Dashboard</h1>
 
           {error && (
-            <div className="bg-red-100 border border-red-200 text-red-700 px-5 py-3 rounded-lg mb-6">
+            <div className="bg-red-100 text-red-800 p-4 rounded mb-6">
               {error}
             </div>
           )}
 
           {quizzes.length === 0 ? (
-            <div className="text-center py-12 bg-white rounded-lg shadow-sm border p-8">
-              <h2 className="text-2xl font-semibold text-gray-700 mb-2">
-                No quizzes available
-              </h2>
-              <p className="text-gray-500">Contact admin to assign quizzes.</p>
+            <div className="text-center py-12 text-gray-500">
+              No quizzes available
             </div>
           ) : (
-            <div className="grid gap-6">
-              {quizzes.map((quiz) => {
-                const status = quiz.attempt_status;
-                const statusLabel = getStatusLabel(status);
+            <div className="overflow-x-auto shadow-lg border rounded-lg">
+              <table className="min-w-full bg-white border-collapse">
+                <thead>
+                  <tr className="bg-purple-100 border-b">
+                    <th className="border px-6 py-4 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">
+                      Quiz
+                    </th>
+                    <th className="border px-6 py-4 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">
+                      Duration
+                    </th>
+                    <th className="border px-6 py-4 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">
+                      Marks
+                    </th>
+                    <th className="border px-6 py-4 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="border px-6 py-4 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {quizzes.map((quiz) => {
+                    const status = quiz.attempt_status || "not_started";
 
-                return (
-                  <div
-                    key={quiz.id}
-                    className="bg-white rounded-xl shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow"
-                  >
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                      <div className="flex-1">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                    return (
+                      <tr key={quiz.id} className="hover:bg-gray-50">
+                        <td className="border px-6 py-4 font-medium text-gray-900">
                           {quiz.title}
-                        </h2>
-                        <p className="text-sm text-gray-500">
-                          Duration:{" "}
-                          <span className="font-medium">
-                            {quiz.duration} min
-                          </span>{" "}
-                          • Marks:{" "}
-                          <span className="font-medium">
-                            {quiz.total_marks}
+                        </td>
+                        <td className="border px-6 py-4 text-sm text-gray-600">
+                          {quiz.duration} min
+                        </td>
+                        <td className="border px-6 py-4 text-sm font-medium text-gray-900">
+                          {quiz.total_marks}
+                        </td>
+                        <td className="border px-6 py-4">
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-medium ${
+                              status === "completed"
+                                ? "bg-green-100 text-green-800"
+                                : status === "in_progress"
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : "bg-gray-100 text-gray-800"
+                            }`}
+                          >
+                            {status === "completed"
+                              ? "Completed"
+                              : status === "in_progress"
+                                ? "Resume"
+                                : "Start"}
                           </span>
-                        </p>
-                      </div>
-
-                      <div className="flex flex-wrap items-center gap-3">
-                        <span
-                          className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${getStatusClass(status)}`}
-                        >
-                          {statusLabel}
-                        </span>
-
-                        {/* Start */}
-                        {!status && (
-                          <button
-                            onClick={() => handleStartQuiz(quiz.id)}
-                            className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition shadow-sm"
-                          >
-                            Start Quiz
-                          </button>
-                        )}
-
-                        {/* Resume */}
-                        {status === "in_progress" && quiz.attempt_id && (
-                          <button
-                            onClick={() =>
-                              handleResumeQuiz(quiz.id, quiz.attempt_id)
-                            }
-                            className="inline-flex items-center justify-center px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium rounded-lg transition"
-                          >
-                            Resume
-                          </button>
-                        )}
-
-                        {/* View Score */}
-                        {status === "completed" && quiz.attempt_id && (
-                          <button
-                            onClick={() => handleViewScore(quiz.attempt_id)}
-                            className="inline-flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition"
-                          >
-                            View Score
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                        </td>
+                        <td className="border px-6 py-4">
+                          {!quiz.attempt_status && (
+                            <button
+                              onClick={() => handleStartQuiz(quiz.id)}
+                              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition"
+                            >
+                              Start Quiz
+                            </button>
+                          )}
+                          {quiz.attempt_status === "in_progress" &&
+                            quiz.attempt_id && (
+                              <button
+                                onClick={() =>
+                                  handleResumeQuiz(quiz.id, quiz.attempt_id)
+                                }
+                                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded text-sm font-medium transition"
+                              >
+                                Resume
+                              </button>
+                            )}
+                          {quiz.attempt_status === "completed" &&
+                            quiz.attempt_id && (
+                              <button
+                                onClick={() => handleViewScore(quiz.attempt_id)}
+                                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm font-medium transition"
+                              >
+                                View Score
+                              </button>
+                            )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           )}
         </div>
