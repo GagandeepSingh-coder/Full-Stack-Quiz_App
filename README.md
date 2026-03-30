@@ -3,7 +3,7 @@
 A full‑stack quiz application with:
 
 - **Frontend**: React (React Router, Axios, Bootstrap‑like CSS)  
-- **Backend**: Python (FastAPI / Flask / your framework) with `app/` structure
+- **Backend**: Python (FastAPI ) with `app/` structure
 
 ---
 
