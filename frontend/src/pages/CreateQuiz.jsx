@@ -13,7 +13,7 @@ function CreateQuiz() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    // ✅ Validation
+    //  Validation
     if (
       !quiz.title ||
       !quiz.total_marks ||

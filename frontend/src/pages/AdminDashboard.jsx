@@ -16,6 +16,7 @@ export default function AdminDashboard() {
       <Navbar />
 
       <div className="container">
+        <h1> Welcome Back to Sparkl CMS</h1>
         <h2>Admin Dashboard</h2>
 
         {quizzes.length === 0 ? (

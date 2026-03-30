@@ -31,14 +31,14 @@ export default function QuizAttempt() {
     }
   }, [token, userId, navigate]);
 
-  // ✅ UPDATED: Finish handler - navigates to REPORT after finish
+  // UPDATED: Finish handler - navigates to REPORT after finish
   const handleFinish = useCallback(async () => {
     // Clear timer if running
     clearInterval(timerRef.current);
     try {
       if (attemptId) {
         await API.post(`/attempt/${attemptId}/finish`);
-        // 🚀 GO TO REPORT INSTEAD OF DASHBOARD
+        // GO TO REPORT INSTEAD OF DASHBOARD
         navigate(`/report/${attemptId}`);
         return;
       }

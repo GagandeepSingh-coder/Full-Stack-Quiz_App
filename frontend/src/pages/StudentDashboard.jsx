@@ -34,14 +34,14 @@ export default function StudentDashboard() {
       .finally(() => setLoading(false));
   }, [token, userId, navigate]); // ✅ ESLint warning fixed: added `token`
 
-  // ✅ Updated: use /attempt instead of /test
+  // Updated: use /attempt instead of /test
   const handleStartQuiz = (quizId) => navigate(`/attempt/${quizId}`);
 
-  // ✅ Updated: use /attempt instead of /test
+  // Updated: use /attempt instead of /test
   const handleResumeQuiz = (quizId, attemptId) =>
     navigate(`/attempt/${quizId}?attempt=${attemptId}`);
 
-  // ✅ View Score: uses the same QuizReport.jsx for student and admin
+  // View Score: uses the same QuizReport.jsx for student and admin
   const handleViewScore = (attemptId) => navigate(`/report/${attemptId}`);
 
   const getStatus = (quiz) =>
@@ -70,6 +70,7 @@ export default function StudentDashboard() {
     <>
       <Navbar />
       <div className="p-8 max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8">Welcome Back to Sparkl</h1>
         <h1 className="text-3xl font-bold mb-8">Student Dashboard</h1>
 
         {error && (

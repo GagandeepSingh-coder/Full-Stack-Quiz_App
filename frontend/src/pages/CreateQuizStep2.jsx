@@ -1,80 +1,3 @@
-// import { useState } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import API from "../services/api";
-// import Navbar from "../components/Navbar";
-
-// function CreateQuizStep2() {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   // data from step 1
-//   const quizData = location.state;
-//   const [questions, setQuestions] = useState([
-//     { question_id: "", marks: "", order: 1 },
-//   ]);
-//   // handle chnage
-//   const handleChange = (index, field, value) => {
-//     const updated = [...questions];
-//     updated[index][field] = value;
-//     setQuestions(updated);
-//   };
-//   // Add new question row
-//   const addQuestion = () => {
-//     setQuestions([
-//       ...questions,
-//       { question_id: "", marks: "", order: questions.length + 1 },
-//     ]);
-//   };
-//   // submit quiz
-//   const handleSubmit = async () => {
-//     try {
-//       // create quiz first
-//       const payload = {
-//         ...quizData,
-//         questions: questions,
-//       };
-//       await API.post("/quiz/", payload);
-//       alert("Quiz created successfully!");
-//       navigate("/admin");
-//     } catch (err) {
-//       console.error(err);
-//       alert("Failed to create quiz");
-//     }
-//   };
-//   return (
-//     <>
-//       <Navbar />
-//       <div className="container">
-//         <h2>Create Quiz - Step 2</h2>
-//         {questions.map((q, index) => (
-//           <div key={index} className="card">
-//             <h4>Question {index + 1}</h4>
-//             <input
-//               placeholder="Question ID"
-//               value={q.question_id}
-//               onChange={(e) =>
-//                 handleChange(index, "question_id", e.target.value)
-//               }
-//             />
-//             <input
-//               placeholder="Marks"
-//               value={q.marks}
-//               onChange={(e) => handleChange(index, "marks", e.target.value)}
-//             />
-//             <input
-//               placeholder="Order"
-//               value={q.order}
-//               onChange={(e) => handleChange(index, "order", e.target.value)}
-//             />
-//           </div>
-//         ))}
-//         <button onClick={addQuestion}>+ Add Question</button>
-//         <button onClick={handleSubmit}>Create Quiz</button>
-//       </div>
-//     </>
-//   );
-// }
-// export default CreateQuizStep2;
-
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import API from "../services/api";
@@ -93,7 +16,7 @@ function CreateQuizStep2() {
       order: i + 1,
       marks: "",
       question_id: "",
-    }))
+    })),
   );
 
   const [questionOptions, setQuestionOptions] = useState([]);
@@ -134,7 +57,7 @@ function CreateQuizStep2() {
     const selectedIds = questions.map((q) => q.question_id);
     if (new Set(selectedIds).size !== selectedIds.length) {
       alert(
-        "Each question can only be selected once. Please remove duplicates."
+        "Each question can only be selected once. Please remove duplicates.",
       );
       return;
     }
