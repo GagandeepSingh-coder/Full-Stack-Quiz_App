@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, UniqueConstraint
 from app.db.database import Base
 
 class User(Base):
@@ -7,6 +7,9 @@ class User(Base):
     username = Column(String(50), unique=True, index=True)
     password = Column(String(255))
     role = Column(String(20))  # admin or student
+    first_name = Column(String(50), nullable=False, default="")
+    last_name = Column(String(50), nullable=False, default="")
+
 
 
 class Quiz(Base):
@@ -15,6 +18,7 @@ class Quiz(Base):
     title = Column(String(100))
     total_marks = Column(Integer)
     duration = Column(Integer)  # in minutes
+
 
 
 class Question(Base):
@@ -45,6 +49,11 @@ class Attempt(Base):
     quiz_id = Column(Integer, ForeignKey("quizzes.id"))
     score = Column(Integer, default=0)
     status = Column(String(20), default="in_progress")
+    # status can be "in_progress" or "completed"
+    # a student can have only one attempt per quiz, so we add a unique constraint on (user_id, quiz_id)
+    __table_args__ = (
+        UniqueConstraint('user_id', 'quiz_id', name='unique_user_quiz'),
+    )
 
 
 class Response(Base):
