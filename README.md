@@ -1,166 +1,69 @@
-# Full-Stack-Quiz_App
+# Full-Stack Quiz App
 
-A full‑stack quiz application with:
+React + FastAPI quiz application with role-based access, timed quizzes, auto-submit, and resume functionality.
 
-- **Frontend**: React (React Router, Axios, Bootstrap‑like CSS)  
-- **Backend**: Python (FastAPI ) with `app/` structure
+## ✨ Features
 
----
+- JWT authentication (admin/student dashboards)
+- Timed quizzes with countdown timers
+- Auto-submit on timer expiry
+- Resume interrupted quizzes from last saved state
+- Score calculation and reporting
+- On-screen error handling 
 
 ## 📁 Project Structure
-
 ```text
 Full-Stack-Quiz_App/
-├── frontend/          ← React frontend
-└── backend/           ← Python backend
-    └── app/           ← main app folder
-        ├── db/
-        ├── models/
-        ├── routes/
-        ├── schemas/
-        └── main.py
+├── frontend/ # React application
+│ ├── src/App.jsx
+│ ├── src/Login.jsx
+│ └── src/services/api.js
+├── backend/ # FastAPI application
+│ └── app/
+│ ├── main.py
+│ ├── models/
+│ ├── schemas/
+│ └── db/
+├── setup.md # Complete setup guide →
+├── assumptions.md # Business rules →
+├── trade-offs.md # Technical decisions →
+└── schema.sql # Database schema + sample data
 ```
 
----
-
-## 🖥️ Frontend (React) – Setup
-
-1. Go into the frontend folder:
+## 🚀 Quick Start
 
 ```bash
-cd frontend
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the development server:
-
-```bash
-npm start
-```
-
-Your React app will open at:
-
-> `http://localhost:3000`
-
----
-
-## ⚙️ Backend (Python) – Setup
-
-1. Go into the backend folder:
-
-```bash
-cd backend
-```
-
-2. Create a virtual environment:
-
-```bash
-python -m venv env
-```
-
-3. Activate the virtual environment:
-
-- **Windows**:
-
-```bash
-env\Scripts\activate
-```
-
-- **Linux / macOS**:
-
-```bash
-source env/bin/activate
-```
-
-4. Install dependencies (from `requirements.txt`):
-
-```bash
-pip install -r requirements.txt
-```
-
-5. Run the backend server:
-
-```bash
-python app/main.py
-```
-
-Your backend will typically run at:
-
-> `http://localhost:8000` (or your configured port).
-
----
-
-## 🔄 Connecting Frontend and Backend
-
-- In `frontend/src/services/api.js`, the base URL is:
-
-```js
-const API = axios.create({
-  baseURL: "http://localhost:8000",
-});
-```
-
-- Make sure:
-
-  - Backend is running on `http://localhost:8000`.  
-  - You can test an endpoint (e.g., `/auth/login`) with Postman or browser.
-
----
-
-## 🚀 Running the Whole App
-
-1. Start backend:
-
-```bash
-cd backend
-env\Scripts\activate          # Windows
-# or source env/bin/activate  # Linux/macOS
-python app/main.py
-```
-
-2. In another terminal, start frontend:
-
-```bash
-cd frontend
-npm start
-```
-
-- Open `http://localhost:3000` in your browser.
-
----
-
-## 📦 After Cloning This Repo
-
-Every time you clone this repo on a new machine, run:
-
-```bash
+git clone https://github.com/GagandeepSingh-coder/Full-Stack-Quiz_App.git
 cd Full-Stack-Quiz_App
+# Follow detailed setup → setup.md
 ```
 
-Then:
+**Demo Credentials:**
+- Student: student1 / password1
+- Admin: admin1 / password1
 
-- **Frontend**:
 
-```bash
-cd frontend
-npm install
-npm start
-```
+## 🛠 Tech Stack
 
-- **Backend** (if virtual env is not present):
+**Frontend:** React, React Router, Axios, CSS  
+**Backend:** FastAPI, SQLAlchemy, JWT, MySQL
 
-```bash
-cd backend
-python -m venv env
-env\Scripts\activate           # Windows
-# or source env/bin/activate   # Linux/macOS
-pip install -r requirements.txt
-python app/main.py
-```
+## 📚 Documentation
 
-That’s it! Your **Full‑Stack Quiz App** is up and running.
+| Guide | Link |
+|-------|------|
+| [Setup Guide](./Setup.md) | Backend + Frontend installation |
+| [Business Rules](./Assumptions.md) | Quiz flow & system assumptions |
+| [Technical Decisions](./Tradeoff.md) | Architecture trade-offs |
+
+## 🔗 API Access
+
+**Backend Swagger Docs:** `http://127.0.0.1:8000/docs`
+
+**Running:**
+- Backend: `http://127.0.0.1:8000`
+- Frontend: `http://localhost:3000`
+
+---
+
+**👉 Start here: [setup.md](./Setup.md) → Login → Test complete quiz flow!**
