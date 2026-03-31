@@ -39,8 +39,8 @@ cd Full-Stack-Quiz_App
 ```
 
 **Demo Credentials:**
-- Student: student1 / password1
-- Admin: admin1 / password1
+- Student: User1 / pass121,User2/pass122,User3/pass123
+- Admin: admin /123
 
 
 ## 🛠 Tech Stack
