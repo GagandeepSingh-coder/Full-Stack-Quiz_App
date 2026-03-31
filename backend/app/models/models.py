@@ -30,7 +30,7 @@ class Question(Base):
     option_c = Column(String(255))
     option_d = Column(String(255))
     correct_option = Column(String(1))  # 'A', 'B', 'C', or 'D'
-    marks = Column(Integer)
+
 
 
 class QuizQuestion(Base):
